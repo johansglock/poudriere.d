@@ -1,0 +1,7 @@
+editors/vim
+ftp/wget
+mail/postfix
+security/ca_root_nss
+security/openssh-portable
+security/sshguard-pf
+www/nginx
