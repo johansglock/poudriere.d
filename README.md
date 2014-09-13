@@ -27,6 +27,11 @@ Create a jail to build packages:
 poudriere jail -c -j 10amd64 -v 10.0-RELEASE -a amd64
 ```
 
+Link the default patch location into this repository:
+```
+ln -s /usr/local/etc/poudriere.d/local-patches/ /usr/ports/distfiles/local-patches
+```
+
 ## Running
 Update the ports tree with:
 ```
