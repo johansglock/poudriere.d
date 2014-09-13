@@ -42,3 +42,26 @@ Build all packages with:
 ```
 poudriere bulk -j 10amd64 -f /usr/local/etc/poudriere.d/10amd64-plist
 ```
+
+## Repository for pkgng
+Nginx configuration within the host:
+```
+location /pkg-repo/ {
+    alias   /usr/local/poudriere/data/packages/;
+    index   index.html index.html;
+    autoindex on;
+}
+```
+
+pkgng configuration:
+```
+MyRepo: {
+  url: "pkg+https://example.com/pkg-repo/10amd64-default",
+  mirror_type: "srv",
+  signature_type: "none",
+  enabled: yes
+}
+```
+
+## TODO
+* Setup pkg signing
