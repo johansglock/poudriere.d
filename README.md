@@ -43,6 +43,11 @@ Build all packages with:
 poudriere bulk -j 10amd64 -f /usr/local/etc/poudriere.d/10amd64-plist
 ```
 
+After updating the plist, make configurations with:
+```
+poudriere options -j 10amd64 -f /usr/local/etc/poudriere.d/10amd64-plist
+```
+
 ## Repository for pkgng
 Nginx configuration within the host:
 ```
