@@ -34,6 +34,8 @@ shells/bash-completion
 shells/zsh
 sysutils/php56-fileinfo
 sysutils/php56-posix
+sysutils/puppet
+sysutils/py-salt
 sysutils/screen
 sysutils/tmux
 textproc/php56-dom
