@@ -7,6 +7,7 @@ databases/php56-pdo_mysql
 databases/php56-pdo_sqlite
 databases/php56-sqlite3
 devel/git
+devel/gmake
 devel/php56-json
 devel/php56-readline
 devel/subversion
@@ -32,6 +33,7 @@ security/sudo
 shells/bash
 shells/bash-completion
 shells/zsh
+sysutils/pefs-kmod
 sysutils/php56-fileinfo
 sysutils/php56-posix
 sysutils/puppet
