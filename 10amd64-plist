@@ -18,7 +18,9 @@ ftp/wget
 lang/php56
 mail/postfix
 math/php56-gmp
+net/openntpd
 net/php56-sockets
+ports-mgmt/dialog4ports
 ports-mgmt/poudriere
 security/ca_root_nss
 security/gnupg
