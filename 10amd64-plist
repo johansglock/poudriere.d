@@ -1,6 +1,7 @@
 archivers/php56-phar
 converters/php56-iconv
 converters/php56-mbstring
+databases/percona56-server
 databases/php56-mysqli
 databases/php56-pdo
 databases/php56-pdo_mysql
