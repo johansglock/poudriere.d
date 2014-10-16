@@ -202,10 +202,10 @@ index d9fedfb..3948325 100644
  		return (-1);
  	}
 diff --git ssl/s3_lib.c ssl/s3_lib.c
-index 387036b..800a8a5 100644
+index 387036b..2cc90a1 100644
 --- ssl/s3_lib.c
 +++ ssl/s3_lib.c
-@@ -2133,6 +2133,31 @@ ssl3_ctrl(SSL *s, int cmd, long larg, void *parg)
+@@ -2133,6 +2133,32 @@ ssl3_ctrl(SSL *s, int cmd, long larg, void *parg)
  		ret = 1;
  		break;
  
@@ -232,7 +232,8 @@ index 387036b..800a8a5 100644
 +			else if (!(s->options & SSL_OP_NO_SSLv2))
 +				ret = (s->version == SSL2_VERSION);
 +		}
-+		ret = 0; /* Unexpected state; fail closed. */
++		else
++			ret = 0; /* Unexpected state; fail closed. */
 +
  	default:
  		break;
