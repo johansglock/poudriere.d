@@ -27,6 +27,7 @@ security/ca_root_nss
 security/gnupg
 security/openssh-portable
 security/openvpn
+security/pam_google_authenticator
 security/php56-filter
 security/php56-hash
 security/php56-mcrypt
