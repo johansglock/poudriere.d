@@ -13,12 +13,14 @@ devel/php56-json
 devel/php56-readline
 devel/subversion
 dns/bind-tools
+dns/unbound
 editors/vim
 ftp/php56-curl
 ftp/wget
 lang/php56
 mail/postfix
 math/php56-gmp
+net-p2p/btsync
 net/openntpd
 net/php56-sockets
 ports-mgmt/dialog4ports
