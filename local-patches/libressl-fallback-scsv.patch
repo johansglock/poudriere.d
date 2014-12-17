@@ -1,8 +1,8 @@
 diff --git apps/s_client.c apps/s_client.c
-index 0da0463..f2b36fe 100644
+index e8038a5..e584422 100644
 --- apps/s_client.c
 +++ apps/s_client.c
-@@ -236,6 +236,7 @@ sc_usage(void)
+@@ -230,6 +230,7 @@ sc_usage(void)
  	BIO_printf(bio_err, " -tls1_2       - just use TLSv1.2\n");
  	BIO_printf(bio_err, " -tls1_1       - just use TLSv1.1\n");
  	BIO_printf(bio_err, " -tls1         - just use TLSv1\n");
@@ -10,7 +10,7 @@ index 0da0463..f2b36fe 100644
  	BIO_printf(bio_err, " -dtls1        - just use DTLSv1\n");
  	BIO_printf(bio_err, " -mtu          - set the link layer MTU\n");
  	BIO_printf(bio_err, " -no_tls1_2/-no_tls1_1/-no_tls1/-no_ssl3/-no_ssl2 - turn off that protocol\n");
-@@ -391,6 +392,7 @@ s_client_main(int argc, char **argv)
+@@ -378,6 +379,7 @@ s_client_main(int argc, char **argv)
  	char *sess_out = NULL;
  	struct sockaddr peer;
  	int peerlen = sizeof(peer);
@@ -18,16 +18,16 @@ index 0da0463..f2b36fe 100644
  	int enable_timeouts = 0;
  	long socket_mtu = 0;
  
-@@ -498,6 +500,8 @@ s_client_main(int argc, char **argv)
+@@ -483,6 +485,8 @@ s_client_main(int argc, char **argv)
  			meth = TLSv1_1_client_method();
  		else if (strcmp(*argv, "-tls1") == 0)
  			meth = TLSv1_client_method();
-+		else if (strcmp(*argv,"-fallback_scsv") == 0)
++		else if (strcmp(*argv, "-fallback_scsv") == 0)
 +			fallback_scsv = 1;
  #ifndef OPENSSL_NO_DTLS1
  		else if (strcmp(*argv, "-dtls1") == 0) {
  			meth = DTLSv1_client_method();
-@@ -807,6 +811,10 @@ bad:
+@@ -786,6 +790,10 @@ bad:
  		SSL_set_session(con, sess);
  		SSL_SESSION_free(sess);
  	}
@@ -35,14 +35,14 @@ index 0da0463..f2b36fe 100644
 +	if (fallback_scsv)
 +		SSL_set_mode(con, SSL_MODE_SEND_FALLBACK_SCSV);
 +
- #ifndef OPENSSL_NO_TLSEXT
  	if (servername != NULL) {
  		if (!SSL_set_tlsext_host_name(con, servername)) {
+ 			BIO_printf(bio_err, "Unable to set TLS servername extension.\n");
 diff --git include/openssl/dtls1.h include/openssl/dtls1.h
-index 6f79b1f..ce9e2ac 100644
+index 89ed404..6dacd59 100644
 --- include/openssl/dtls1.h
 +++ include/openssl/dtls1.h
-@@ -71,6 +71,7 @@ extern "C" {
+@@ -73,6 +73,7 @@ extern "C" {
  #endif
  
  #define DTLS1_VERSION			0xFEFF
@@ -51,10 +51,10 @@ index 6f79b1f..ce9e2ac 100644
  
  /* lengths of messages */
 diff --git include/openssl/ssl.h include/openssl/ssl.h
-index 00b7feb..d35aff2 100644
+index 3a62695..77fd9af 100644
 --- include/openssl/ssl.h
 +++ include/openssl/ssl.h
-@@ -606,6 +606,10 @@ struct ssl_session_st {
+@@ -609,6 +609,10 @@ struct ssl_session_st {
   * TLS only.)  "Released" buffers are put onto a free-list in the context
   * or just freed (depending on the context's setting for freelist_max_len). */
  #define SSL_MODE_RELEASE_BUFFERS 0x00000010L
@@ -65,7 +65,7 @@ index 00b7feb..d35aff2 100644
  
  /* Note: SSL[_CTX]_set_{options,mode} use |= op on the previous value,
   * they cannot be used to clear bits. */
-@@ -1325,6 +1329,7 @@ DECLARE_PEM_rw(SSL_SESSION, SSL_SESSION)
+@@ -1328,6 +1332,7 @@ DECLARE_PEM_rw(SSL_SESSION, SSL_SESSION)
  #define SSL_AD_BAD_CERTIFICATE_STATUS_RESPONSE TLS1_AD_BAD_CERTIFICATE_STATUS_RESPONSE
  #define SSL_AD_BAD_CERTIFICATE_HASH_VALUE TLS1_AD_BAD_CERTIFICATE_HASH_VALUE
  #define SSL_AD_UNKNOWN_PSK_IDENTITY     TLS1_AD_UNKNOWN_PSK_IDENTITY /* fatal */
@@ -73,16 +73,16 @@ index 00b7feb..d35aff2 100644
  
  #define SSL_ERROR_NONE			0
  #define SSL_ERROR_SSL			1
-@@ -1427,6 +1432,8 @@ DECLARE_PEM_rw(SSL_SESSION, SSL_SESSION)
+@@ -1432,6 +1437,8 @@ DECLARE_PEM_rw(SSL_SESSION, SSL_SESSION)
  
- #define SSL_CTRL_SET_ECDH_AUTO				94
+ #define SSL_CTRL_SET_DH_AUTO			118
  
 +#define SSL_CTRL_CHECK_PROTO_VERSION		119
 +
  #define DTLSv1_get_timeout(ssl, arg) \
  	SSL_ctrl(ssl,DTLS_CTRL_GET_TIMEOUT,0, (void *)arg)
  #define DTLSv1_handle_timeout(ssl) \
-@@ -2125,6 +2132,7 @@ void ERR_load_SSL_strings(void);
+@@ -2134,6 +2141,7 @@ void ERR_load_SSL_strings(void);
  #define SSL_R_HTTPS_PROXY_REQUEST			 155
  #define SSL_R_HTTP_REQUEST				 156
  #define SSL_R_ILLEGAL_PADDING				 283
@@ -90,7 +90,7 @@ index 00b7feb..d35aff2 100644
  #define SSL_R_INCONSISTENT_COMPRESSION			 340
  #define SSL_R_INVALID_CHALLENGE_LENGTH			 158
  #define SSL_R_INVALID_COMMAND				 280
-@@ -2270,6 +2278,7 @@ void ERR_load_SSL_strings(void);
+@@ -2279,6 +2287,7 @@ void ERR_load_SSL_strings(void);
  #define SSL_R_TLSV1_ALERT_DECRYPTION_FAILED		 1021
  #define SSL_R_TLSV1_ALERT_DECRYPT_ERROR			 1051
  #define SSL_R_TLSV1_ALERT_EXPORT_RESTRICTION		 1060
@@ -99,7 +99,7 @@ index 00b7feb..d35aff2 100644
  #define SSL_R_TLSV1_ALERT_INTERNAL_ERROR		 1080
  #define SSL_R_TLSV1_ALERT_NO_RENEGOTIATION		 1100
 diff --git include/openssl/ssl3.h include/openssl/ssl3.h
-index 08a736e..2412157 100644
+index 2cfb047..c7df292 100644
 --- include/openssl/ssl3.h
 +++ include/openssl/ssl3.h
 @@ -125,9 +125,14 @@
@@ -119,7 +119,7 @@ index 08a736e..2412157 100644
  #define SSL3_CK_RSA_NULL_SHA			0x03000002
  #define SSL3_CK_RSA_RC4_40_MD5 			0x03000003
 diff --git include/openssl/tls1.h include/openssl/tls1.h
-index 2488598..a3f3fe2 100644
+index adf80fa..7cb6a0e 100644
 --- include/openssl/tls1.h
 +++ include/openssl/tls1.h
 @@ -171,6 +171,8 @@ extern "C" {
@@ -138,12 +138,12 @@ index 2488598..a3f3fe2 100644
 +#define TLS1_AD_INAPPROPRIATE_FALLBACK  86  /* fatal */
  #define TLS1_AD_USER_CANCELLED		90
  #define TLS1_AD_NO_RENEGOTIATION	100
- /* codes 110-114 are from RFC3546 */
+ /* Codes 110-114 are from RFC 3546. */
 diff --git ssl/d1_lib.c ssl/d1_lib.c
-index 7088e45..49b23a7 100644
+index 5111fcc..f4904e5 100644
 --- ssl/d1_lib.c
 +++ ssl/d1_lib.c
-@@ -265,6 +265,16 @@ dtls1_ctrl(SSL *s, int cmd, long larg, void *parg)
+@@ -266,6 +266,16 @@ dtls1_ctrl(SSL *s, int cmd, long larg, void *parg)
  	case DTLS_CTRL_LISTEN:
  		ret = dtls1_listen(s, parg);
  		break;
@@ -161,7 +161,7 @@ index 7088e45..49b23a7 100644
  	default:
  		ret = ssl3_ctrl(s, cmd, larg, parg);
 diff --git ssl/s23_clnt.c ssl/s23_clnt.c
-index 5c8ba58..45b2674 100644
+index c25cfa6..b1e82a0 100644
 --- ssl/s23_clnt.c
 +++ ssl/s23_clnt.c
 @@ -498,6 +498,9 @@ ssl23_get_server_hello(SSL *s)
@@ -175,10 +175,10 @@ index 5c8ba58..45b2674 100644
  			/* fatal alert */
  			void (*cb)(const SSL *ssl, int type, int val) = NULL;
 diff --git ssl/s23_srvr.c ssl/s23_srvr.c
-index feed931..51713e7 100644
+index a99952a..652ed30 100644
 --- ssl/s23_srvr.c
 +++ ssl/s23_srvr.c
-@@ -260,6 +260,9 @@ end:
+@@ -261,6 +261,9 @@ end:
  int
  ssl23_get_client_hello(SSL *s)
  {
@@ -189,10 +189,10 @@ index feed931..51713e7 100644
  	/*
  	 * sizeof(buf) == 11, because we'll need to request this many bytes in
 diff --git ssl/s3_enc.c ssl/s3_enc.c
-index d9fedfb..3948325 100644
+index 0247b20..b3d7c9f 100644
 --- ssl/s3_enc.c
 +++ ssl/s3_enc.c
-@@ -831,6 +831,8 @@ ssl3_alert_code(int code)
+@@ -833,6 +833,8 @@ ssl3_alert_code(int code)
  		return (SSL3_AD_HANDSHAKE_FAILURE);
  	case SSL_AD_UNKNOWN_PSK_IDENTITY:
  		return (TLS1_AD_UNKNOWN_PSK_IDENTITY);
@@ -202,10 +202,10 @@ index d9fedfb..3948325 100644
  		return (-1);
  	}
 diff --git ssl/s3_lib.c ssl/s3_lib.c
-index 387036b..2cc90a1 100644
+index 03f7af8..b9a5161 100644
 --- ssl/s3_lib.c
 +++ ssl/s3_lib.c
-@@ -2133,6 +2133,32 @@ ssl3_ctrl(SSL *s, int cmd, long larg, void *parg)
+@@ -2143,6 +2143,32 @@ ssl3_ctrl(SSL *s, int cmd, long larg, void *parg)
  		ret = 1;
  		break;
  
@@ -239,10 +239,10 @@ index 387036b..2cc90a1 100644
  		break;
  	}
 diff --git ssl/ssl_err.c ssl/ssl_err.c
-index 52f6505..6dbb3ab 100644
+index 7fd1dfc..17fe209 100644
 --- ssl/ssl_err.c
 +++ ssl/ssl_err.c
-@@ -384,6 +384,7 @@ static ERR_STRING_DATA SSL_str_reasons[]= {
+@@ -385,6 +385,7 @@ static ERR_STRING_DATA SSL_str_reasons[]= {
  	{ERR_REASON(SSL_R_HTTPS_PROXY_REQUEST)   , "https proxy request"},
  	{ERR_REASON(SSL_R_HTTP_REQUEST)          , "http request"},
  	{ERR_REASON(SSL_R_ILLEGAL_PADDING)       , "illegal padding"},
@@ -250,7 +250,7 @@ index 52f6505..6dbb3ab 100644
  	{ERR_REASON(SSL_R_INCONSISTENT_COMPRESSION), "inconsistent compression"},
  	{ERR_REASON(SSL_R_INVALID_CHALLENGE_LENGTH), "invalid challenge length"},
  	{ERR_REASON(SSL_R_INVALID_COMMAND)       , "invalid command"},
-@@ -529,6 +530,7 @@ static ERR_STRING_DATA SSL_str_reasons[]= {
+@@ -530,6 +531,7 @@ static ERR_STRING_DATA SSL_str_reasons[]= {
  	{ERR_REASON(SSL_R_TLSV1_ALERT_DECRYPTION_FAILED), "tlsv1 alert decryption failed"},
  	{ERR_REASON(SSL_R_TLSV1_ALERT_DECRYPT_ERROR), "tlsv1 alert decrypt error"},
  	{ERR_REASON(SSL_R_TLSV1_ALERT_EXPORT_RESTRICTION), "tlsv1 alert export restriction"},
@@ -259,10 +259,10 @@ index 52f6505..6dbb3ab 100644
  	{ERR_REASON(SSL_R_TLSV1_ALERT_INTERNAL_ERROR), "tlsv1 alert internal error"},
  	{ERR_REASON(SSL_R_TLSV1_ALERT_NO_RENEGOTIATION), "tlsv1 alert no renegotiation"},
 diff --git ssl/ssl_lib.c ssl/ssl_lib.c
-index 20e9329..9b9f470 100644
+index 481f2f5..a94951d 100644
 --- ssl/ssl_lib.c
 +++ ssl/ssl_lib.c
-@@ -1388,15 +1388,22 @@ ssl_cipher_list_to_bytes(SSL *s, STACK_OF(SSL_CIPHER) *sk, unsigned char *p)
+@@ -1390,15 +1390,22 @@ ssl_cipher_list_to_bytes(SSL *s, STACK_OF(SSL_CIPHER) *sk, unsigned char *p)
  		s2n(ssl3_cipher_get_value(c), p);
  	}
  
@@ -294,7 +294,7 @@ index 20e9329..9b9f470 100644
  	}
  
  	return (p - q);
-@@ -1433,7 +1440,7 @@ ssl_bytes_to_cipher_list(SSL *s, unsigned char *p, int num,
+@@ -1435,7 +1442,7 @@ ssl_bytes_to_cipher_list(SSL *s, unsigned char *p, int num,
  		n2s(p, cipher_value);
  		cipher_id = SSL3_CK_ID | cipher_value;
  
@@ -303,7 +303,7 @@ index 20e9329..9b9f470 100644
  		if (s->s3 && cipher_id == SSL3_CK_SCSV) {
  			/* SCSV is fatal if renegotiating. */
  			if (s->renegotiate) {
-@@ -1448,6 +1455,19 @@ ssl_bytes_to_cipher_list(SSL *s, unsigned char *p, int num,
+@@ -1450,6 +1457,19 @@ ssl_bytes_to_cipher_list(SSL *s, unsigned char *p, int num,
  			continue;
  		}
  
@@ -313,7 +313,7 @@ index 20e9329..9b9f470 100644
 +				SSLerr(SSL_F_SSL_BYTES_TO_CIPHER_LIST, SSL_R_INAPPROPRIATE_FALLBACK);
 +
 +				if (s->s3)
-+					ssl3_send_alert(s,SSL3_AL_FATAL, SSL_AD_INAPPROPRIATE_FALLBACK);
++					ssl3_send_alert(s, SSL3_AL_FATAL, SSL_AD_INAPPROPRIATE_FALLBACK);
 +
 +				goto err;
 +			}
@@ -324,10 +324,10 @@ index 20e9329..9b9f470 100644
  		if (c != NULL) {
  			if (!sk_SSL_CIPHER_push(sk, c)) {
 diff --git ssl/t1_enc.c ssl/t1_enc.c
-index e4b5469..39fc9e9 100644
+index 96268e8..aa07e8c 100644
 --- ssl/t1_enc.c
 +++ ssl/t1_enc.c
-@@ -1228,6 +1228,8 @@ tls1_alert_code(int code)
+@@ -1241,6 +1241,8 @@ tls1_alert_code(int code)
  		return (TLS1_AD_BAD_CERTIFICATE_HASH_VALUE);
  	case SSL_AD_UNKNOWN_PSK_IDENTITY:
  		return (TLS1_AD_UNKNOWN_PSK_IDENTITY);
