@@ -17,6 +17,7 @@ dns/unbound
 editors/vim
 ftp/php56-curl
 ftp/wget
+lang/clang35
 lang/php56
 mail/postfix
 math/php56-gmp
