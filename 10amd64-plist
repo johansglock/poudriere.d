@@ -21,12 +21,14 @@ lang/clang35
 lang/php56
 mail/postfix
 math/php56-gmp
+multimedia/plexmediaserver-plexpass
 net-mgmt/iftop
 net-p2p/btsync
 net/jwhois
 net/openntpd
 net/php56-sockets
 net/relayd
+news/sabnzbdplus
 ports-mgmt/dialog4ports
 ports-mgmt/poudriere
 security/ca_root_nss
