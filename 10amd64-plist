@@ -20,11 +20,13 @@ ftp/wget
 lang/clang35
 lang/php56
 mail/postfix
+math/php56-bcmath
 math/php56-gmp
 multimedia/plexmediaserver-plexpass
 net-mgmt/iftop
 net-p2p/btsync
 net/jwhois
+net/mtr
 net/openntpd
 net/php56-sockets
 net/relayd
