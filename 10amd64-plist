@@ -1,4 +1,6 @@
 archivers/php56-phar
+archivers/php56-zip
+archivers/php56-zlib
 converters/php56-iconv
 converters/php56-mbstring
 databases/percona56-server
@@ -17,6 +19,7 @@ dns/unbound
 editors/vim
 ftp/php56-curl
 ftp/wget
+graphics/php56-gd
 lang/clang35
 lang/php56
 mail/postfix
@@ -56,8 +59,11 @@ sysutils/py-salt
 sysutils/screen
 sysutils/tmux
 textproc/jq
+textproc/php56-ctype
 textproc/php56-dom
+textproc/php56-xml
 textproc/php56-simplexml
+textproc/php56-xmlwriter
 www/nginx
 www/php56-opcache
 www/php56-session
