@@ -15,11 +15,13 @@ devel/php56-json
 devel/php56-readline
 devel/subversion
 dns/bind-tools
+dns/nsd
 dns/unbound
 editors/vim
 ftp/php56-curl
 ftp/wget
 graphics/php56-gd
+irc/znc
 lang/clang35
 lang/php56
 mail/postfix
@@ -61,8 +63,8 @@ sysutils/tmux
 textproc/jq
 textproc/php56-ctype
 textproc/php56-dom
-textproc/php56-xml
 textproc/php56-simplexml
+textproc/php56-xml
 textproc/php56-xmlwriter
 www/nginx
 www/php56-opcache
