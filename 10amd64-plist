@@ -9,6 +9,7 @@ databases/php56-pdo
 databases/php56-pdo_mysql
 databases/php56-pdo_sqlite
 databases/php56-sqlite3
+devel/gdb
 devel/git
 devel/gmake
 devel/php56-json
@@ -27,7 +28,6 @@ lang/php56
 mail/postfix
 math/php56-bcmath
 math/php56-gmp
-multimedia/plexmediaserver-plexpass
 net-mgmt/iftop
 net-p2p/btsync
 net/jwhois
@@ -35,7 +35,6 @@ net/mtr
 net/openntpd
 net/php56-sockets
 net/relayd
-news/sabnzbdplus
 ports-mgmt/dialog4ports
 ports-mgmt/poudriere
 security/ca_root_nss
