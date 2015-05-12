@@ -1,8 +1,11 @@
 archivers/php56-phar
 archivers/php56-zip
 archivers/php56-zlib
+benchmarks/iperf
+benchmarks/iperf3
 converters/php56-iconv
 converters/php56-mbstring
+databases/mongodb
 databases/percona56-server
 databases/php56-mysqli
 databases/php56-pdo
@@ -16,7 +19,9 @@ devel/php56-json
 devel/php56-readline
 devel/subversion
 dns/bind-tools
+dns/dnsperf
 dns/nsd
+dns/powerdns
 dns/unbound
 editors/vim
 ftp/php56-curl
@@ -28,9 +33,12 @@ lang/php56
 mail/postfix
 math/php56-bcmath
 math/php56-gmp
+net-mgmt/argus3
+net-mgmt/argus3-clients
 net-mgmt/iftop
 net-p2p/btsync
 net/jwhois
+net/mosh
 net/mtr
 net/openntpd
 net/php56-sockets
@@ -51,6 +59,7 @@ security/sudo
 shells/bash
 shells/bash-completion
 shells/zsh
+sysutils/ansible
 sysutils/pefs-kmod
 sysutils/pftop
 sysutils/php56-fileinfo
@@ -66,5 +75,6 @@ textproc/php56-simplexml
 textproc/php56-xml
 textproc/php56-xmlwriter
 www/nginx
+www/node
 www/php56-opcache
 www/php56-session
