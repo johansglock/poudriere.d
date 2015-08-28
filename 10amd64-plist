@@ -8,7 +8,7 @@ converters/php7-iconv
 converters/php7-mbstring
 converters/php7-recode
 databases/mongodb
-databases/percona56-server
+databases/mariadb100-server
 databases/php7-dba
 databases/php7-interbase
 databases/php7-mysqli
